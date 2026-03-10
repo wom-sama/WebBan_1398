@@ -1,0 +1,39 @@
+@model WebBan_1398.Models.Product
+
+@{
+    ViewData["Title"] = "Xóa Sản Phẩm";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0 rounded-4 text-center p-4">
+                <div class="mb-3">
+                    <i class="fa-solid fa-triangle-exclamation text-warning" style="font-size: 4rem;"></i>
+                </div>
+                <h2 class="mb-3 text-danger">Xác Nhận Xóa?</h2>
+                <p class="lead">Bạn có chắc chắn muốn xóa sản phẩm này không?</p>
+                
+                <div class="card bg-light border-0 rounded-3 p-3 mb-4 text-start">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <img src="@Model.ImageUrl" class="img-fluid rounded" alt="@Model.Name">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="fw-bold text-dark">@Model.Name</h5>
+                            <p class="text-muted mb-0">Giá: @Model.Price.ToString("N0")₫</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger rounded-pill fw-bold">Xóa Ngay</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill">Quay Lại</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

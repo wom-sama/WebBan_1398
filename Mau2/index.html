@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Figure Shop</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/Style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Thanh điều hướng -->
+    <nav id="main-nav" class="navbar navbar-expand-lg bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" id="logo" href="#">
+                <i class="fa-solid fa-heart"></i> AnimeStore
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav gap-lg-4 my-3 my-lg-0">
+                    <li class="nav-item"><a href="#" class="nav-link menu-link">Trang Chủ</a></li>
+                    <li class="nav-item"><a href="#featured-products" class="nav-link menu-link">Nổi Bật</a></li>
+                    <li class="nav-item"><a href="#new-arrivals" class="nav-link menu-link">Mới Về</a></li>
+                    <li class="nav-item"><a href="#limited-edition" class="nav-link menu-link">Giới Hạn</a></li>
+                    <li class="nav-item"><a href="#footer" class="nav-link menu-link">Liên Hệ</a></li>
+                </ul>
+            </div>
+            <div class="cart-icon ms-lg-3">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="badge">3</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Banner chính -->
+    <header id="hero-banner">
+        <div class="floating-shapes">
+            <i class="fa-solid fa-heart shape-1"></i>
+            <i class="fa-solid fa-star shape-2"></i>
+            <i class="fa-solid fa-music shape-3"></i>
+        </div>
+        <div class="container hero-content">
+            <h1 class="hero-title">Bộ Sưu Tập HHHHHH</h1>
+            <p class="hero-desc">Mang thế giới 2D về căn phòng của bạn.</p>
+            <button class="btn btn-primary">Mua Ngay <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </header>
+
+    <!-- Danh sách sản phẩm -->
+    <section id="featured-products" class="category-section container py-4">
+        <h2 class="section-title">Sản Phẩm Nổi Bật <i class="fa-solid fa-star"></i></h2>
+        
+        <div class="row g-4">
+            <!-- Sản phẩm 1 -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.webp" alt="Mô hình Anime">
+                    <div class="overlay">
+                        <button class="btn btn-secondary">Xem Chi Tiết</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Hatsune Miku Sakura Ver.</h3>
+                    <p class="product-price">1.200.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 2 -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/product-frame-2025-1758080549577.webp" alt="Mô hình Anime">
+                    <div class="overlay">
+                        <button class="btn btn-secondary">Xem Chi Tiết</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Rem Re:Zero Angel</h3>
+                    <p class="product-price">950.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 3 -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.png" alt="Mô hình Anime">
+                    <div class="overlay">
+                        <button class="btn btn-secondary">Xem Chi Tiết</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Ganyu Genshin Impact</h3>
+                    <p class="product-price">2.500.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 4 -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.webp" alt="Mô hình Anime">
+                    <div class="overlay">
+                        <button class="btn btn-secondary">Xem Chi Tiết</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Asuka Langley Evangelion</h3>
+                    <p class="product-price">1.500.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 5 -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.webp" alt="Mô hình Anime">
+                    <div class="overlay">
+                        <button class="btn btn-secondary">Xem Chi Tiết</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Zero Two Darling in the Franxx</h3>
+                    <p class="product-price">1.800.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 6 -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.webp" alt="Mô hình Anime">
+                    <div class="overlay">
+                        <button class="btn btn-secondary">Xem Chi Tiết</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Saber Fate/Stay Night</h3>
+                    <p class="product-price">2.100.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 7 -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/mfigure-productframe-2024-1740756171386.webp" alt="Mô hình Anime">
+                    <div class="overlay">
+                        <button class="btn btn-secondary">Xem Chi Tiết</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Kurumi Tokisaki Date A Live</h3>
+                    <p class="product-price">1.350.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 8 -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.webp" alt="Mô hình Anime">
+                    <div class="overlay">
+                        <button class="btn btn-secondary">Xem Chi Tiết</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Yor Forger Spy x Family</h3>
+                    <p class="product-price">1.100.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Danh mục: Mới Về -->
+    <section id="new-arrivals" class="category-section container py-4">
+        <h2 class="section-title">Mô hình Mới Về <i class="fa-solid fa-bolt"></i></h2>
+        <div class="row g-4">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.webp" alt="Mô hình Anime">
+                    <div class="overlay"><button class="btn btn-secondary">Xem Chi Tiết</button></div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Albedo Overlord Wing Ver.</h3>
+                    <p class="product-price">3.200.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.png" alt="Mô hình Anime">
+                    <div class="overlay"><button class="btn btn-secondary">Xem Chi Tiết</button></div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Marin Kitagawa Dress Up</h3>
+                    <p class="product-price">1.150.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.webp" alt="Mô hình Anime">
+                    <div class="overlay"><button class="btn btn-secondary">Xem Chi Tiết</button></div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Power Chainsaw Man</h3>
+                    <p class="product-price">980.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.png" alt="Mô hình Anime">
+                    <div class="overlay"><button class="btn btn-secondary">Xem Chi Tiết</button></div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Anya Forger & Bond</h3>
+                    <p class="product-price">850.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Danh mục: Bộ Sưu Tập Giới Hạn -->
+    <section id="limited-edition" class="category-section container py-4">
+        <h2 class="section-title">Bộ Sưu Tập Giới Hạn <i class="fa-solid fa-gem"></i></h2>
+        <div class="row g-4">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/Nekotwo-_Pre-order_-Genshin-Impact---HuTao-Ghost-Night-Lamp-1677842092.webp" alt="Mô hình Anime">
+                    <div class="overlay"><button class="btn btn-secondary">Xem Chi Tiết</button></div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Hutao Genshin Impact Ghost</h3>
+                    <p class="product-price">4.500.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.png" alt="Mô hình Anime">
+                    <div class="overlay"><button class="btn btn-secondary">Xem Chi Tiết</button></div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Raiden Shogun Baal</h3>
+                    <p class="product-price">5.100.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.webp" alt="Mô hình Anime">
+                    <div class="overlay"><button class="btn btn-secondary">Xem Chi Tiết</button></div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Mikasa Ackerman Final Season</h3>
+                    <p class="product-price">2.800.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100">
+                <div class="product-image">
+                    <img src="image/testim.png" alt="Mô hình Anime">
+                    <div class="overlay"><button class="btn btn-secondary">Xem Chi Tiết</button></div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Shinobu Kocho Demon Slayer</h3>
+                    <p class="product-price">1.650.000₫</p>
+                    <button class="btn btn-add">Thêm vào giỏ</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="row footer-container">
+            <div class="col-md-4 footer-section">
+                <h3>Về AnimeStore</h3>
+                <p>Thiên đường mô hình chính hãng với giá cả hợp lý. Chúng tôi cam kết mang lại niềm vui cho mọi khách hàng.</p>
+            </div>
+            <div class="col-md-4 footer-section">
+                <h3>Liên Kết Nhanh</h3>
+                <ul>
+                    <li><a href="#">Trang Chủ</a></li>
+                    <li><a href="#">Sản Phẩm Mới</a></li>
+                    <li><a href="#">Chính Sách Bảo Hành</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 footer-section">
+                <h3>Kết Nối</h3>
+                <p><i class="fa-solid fa-envelope"></i> contact@animestore.vn</p>
+                <p><i class="fa-solid fa-phone"></i> 1900 1000</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AnimeStore</p>
+        </div>
+    </footer>
+
+    <!-- Script xử lý hiệu ứng click banner -->
+    <script>
+        const banner = document.getElementById('hero-banner');
+        let clickCount = 0;
+        let clickTimer;
+
+        banner.addEventListener('click', (e) => {
+            // Không kích hoạt nếu click vào nút Mua Ngay
+            if(e.target.closest('.btn')) return;
+
+            clickCount++;
+            clearTimeout(clickTimer);
+
+            if (clickCount === 4) {
+                // Kích hoạt hiệu ứng tan vỡ
+                banner.classList.add('shatter-mode');
+                
+                // Sau 500ms (khi tan vỡ xong), kích hoạt tua ngược
+                setTimeout(() => {
+                    banner.classList.remove('shatter-mode');
+                    banner.classList.add('restore-mode');
+                    
+                    // Xóa class khôi phục sau khi hoàn tất
+                    setTimeout(() => {
+                        banner.classList.remove('restore-mode');
+                    }, 800);
+                }, 500);
+                
+                clickCount = 0;
+            } else {
+                // Reset bộ đếm nếu không click tiếp trong vòng 1 giây
+                clickTimer = setTimeout(() => {
+                    clickCount = 0;
+                }, 1000);
+            }
+        });
+
+        // Script xử lý hiệu ứng click vào tiêu đề danh mục
+        document.querySelectorAll('.section-title').forEach(title => {
+            title.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (icon && !icon.classList.contains('icon-shatter')) {
+                    // Kích hoạt tan vỡ
+                    icon.classList.add('icon-shatter');
+                    
+                    // Sau khi tan vỡ xong (0.5s), kích hoạt phục hồi
+                    setTimeout(() => {
+                        icon.classList.remove('icon-shatter');
+                        icon.classList.add('icon-restore');
+                        
+                        // Xóa class phục hồi sau khi xong (0.8s)
+                        setTimeout(() => {
+                            icon.classList.remove('icon-restore');
+                        }, 800);
+                    }, 500);
+                }
+            });
+        });
+
+        // Script xử lý thêm vào giỏ hàng với hiệu ứng tan vỡ & hút
+        document.querySelectorAll('.btn-add').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const card = this.closest('.product-card');
+                const img = card.querySelector('img');
+                const cartIcon = document.querySelector('.cart-icon');
+                const badge = cartIcon.querySelector('.badge');
+
+                // 1. Tạo bản sao hình ảnh
+                const clone = img.cloneNode(true);
+                const imgRect = img.getBoundingClientRect();
+                const cartRect = cartIcon.getBoundingClientRect();
+
+                // Thiết lập vị trí ban đầu cho bản sao trùng khớp với ảnh gốc
+                clone.style.position = 'fixed';
+                clone.style.top = imgRect.top + 'px';
+                clone.style.left = imgRect.left + 'px';
+                clone.style.width = imgRect.width + 'px';
+                clone.style.height = imgRect.height + 'px';
+                clone.style.zIndex = '9999';
+                clone.style.objectFit = 'cover';
+                clone.style.borderRadius = '20px'; 
+                clone.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)'; // Easing function tạo cảm giác hút mạnh
+
+                document.body.appendChild(clone);
+
+                // Giai đoạn 1: Hiệu ứng tan vỡ (rung lắc + sáng lên)
+                clone.style.animation = 'shatter-shake 0.5s forwards';
+
+                // Giai đoạn 2: Hút vào giỏ hàng (sau 400ms)
+                setTimeout(() => {
+                    clone.style.animation = 'none'; // Xóa animation để transition hoạt động
+                    clone.style.top = (cartRect.top + cartRect.height / 2 - 20) + 'px'; // Căn giữa icon giỏ
+                    clone.style.left = (cartRect.left + cartRect.width / 2 - 20) + 'px';
+                    clone.style.width = '40px';
+                    clone.style.height = '40px';
+                    clone.style.opacity = '0'; // Mờ dần khi bay
+                    clone.style.transform = 'rotate(720deg) scale(0.1)'; // Xoay và thu nhỏ
+                    clone.style.borderRadius = '50%';
+                }, 400);
+
+                // Giai đoạn 3: Dọn dẹp và cập nhật số lượng (sau khi bay xong)
+                setTimeout(() => {
+                    clone.remove();
+                    // Cập nhật số lượng
+                    let count = parseInt(badge.innerText);
+                    badge.innerText = count + 1;
+                    // Hiệu ứng giỏ hàng nảy lên
+                    cartIcon.style.animation = 'cart-bump 0.3s';
+                    setTimeout(() => { cartIcon.style.animation = 'none'; }, 300);
+                }, 1200); // 400ms delay + 800ms transition
+            });
+        });
+    </script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

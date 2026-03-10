@@ -1,0 +1,52 @@
+@model WebBan_1398.Models.Product
+
+@{
+    ViewData["Title"] = "Thêm Sản Phẩm Mới";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 rounded-4 p-4">
+                <h2 class="text-center mb-4" style="color: #ff69b4;">Thêm Sản Phẩm Mới <i class="fa-solid fa-magic"></i></h2>
+                
+                <form asp-action="Add" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-bold">Tên Sản Phẩm</label>
+                        <input asp-for="Name" class="form-control rounded-pill" placeholder="Nhập tên mô hình..." />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Price" class="form-label fw-bold">Giá Bán</label>
+                        <input asp-for="Price" class="form-control rounded-pill" placeholder="Nhập giá..." />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label fw-bold">Mô Tả</label>
+                        <textarea asp-for="Description" class="form-control rounded-4" rows="4" placeholder="Mô tả chi tiết..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CategoryId" class="form-label fw-bold">Danh Mục</label>
+                        <select asp-for="CategoryId" class="form-select rounded-pill" asp-items="ViewBag.Categories"></select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="ImageUrl" class="form-label fw-bold">Hình Ảnh</label>
+                        <input type="file" name="imageUrl" class="form-control rounded-pill" />
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-add btn-lg">Hoàn Tất Thêm Mới</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill">Quay Lại Danh Sách</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+@model WebBan_1398.Models.Product
+
+@{
+    ViewData["Title"] = "Cập Nhật Sản Phẩm";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 rounded-4 p-4">
+                <h2 class="text-center mb-4" style="color: #ff69b4;">Cập Nhật Sản Phẩm <i class="fa-solid fa-pen-to-square"></i></h2>
+                
+                <form asp-action="Update" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-bold">Tên Sản Phẩm</label>
+                        <input asp-for="Name" class="form-control rounded-pill" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Price" class="form-label fw-bold">Giá Bán</label>
+                        <input asp-for="Price" class="form-control rounded-pill" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label fw-bold">Mô Tả</label>
+                        <textarea asp-for="Description" class="form-control rounded-4" rows="4"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CategoryId" class="form-label fw-bold">Danh Mục</label>
+                        <select asp-for="CategoryId" class="form-select rounded-pill" asp-items="ViewBag.Categories"></select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Hình Ảnh Hiện Tại</label>
+                        <div class="mb-2"><img src="@Model.ImageUrl" style="height: 100px; border-radius: 10px;" /></div>
+                        <label asp-for="ImageUrl" class="form-label fw-bold">Chọn Ảnh Mới (Nếu muốn thay đổi)</label>
+                        <input type="file" name="imageUrl" class="form-control rounded-pill" />
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-add btn-lg">Lưu Thay Đổi</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill">Hủy Bỏ</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

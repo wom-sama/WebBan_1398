@@ -1,0 +1,51 @@
+@model WebBan_1398.Models.Product
+
+@{
+    ViewData["Title"] = "Xác nhận xóa";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card shadow-lg border-danger">
+                <div class="card-header bg-danger text-white py-4">
+                     <h2 class="section-title text-white mb-0">Xác Nhận Xóa Sản Phẩm <i class="fa-solid fa-triangle-exclamation"></i></h2>
+                </div>
+                <div class="card-body p-5">
+                    <h4 class="mb-4">Bạn có chắc chắn muốn xóa sản phẩm này không?</h4>
+                    
+                    <div class="card my-4 mx-auto" style="max-width: 400px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                                {
+                                    <img src="@Url.Content(Model.ImageUrl)" class="img-fluid rounded-start" alt="@Model.Name">
+                                }
+                                else
+                                {
+                                    <img src="~/Image/placeholder.png" class="img-fluid rounded-start" alt="No Image">
+                                }
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body text-start">
+                                    <h5 class="card-title">@Model.Name</h5>
+                                    <p class="card-text"><small class="text-muted">Giá: @Model.Price.ToString("N0")₫</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-danger fw-bold">Hành động này không thể hoàn tác!</p>
+
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-5">
+                            <button type="submit" class="btn btn-danger btn-lg"><i class="fa-solid fa-trash-alt"></i> Vâng, Xóa!</button>
+                            <a asp-action="Index" class="btn btn-secondary btn-lg mt-2 mt-md-0"><i class="fa-solid fa-times-circle"></i> Không, Quay Lại</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

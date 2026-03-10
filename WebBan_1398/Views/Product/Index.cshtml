@@ -1,0 +1,110 @@
+@model IEnumerable<WebBan_1398.Models.Product>
+
+@{
+    ViewData["Title"] = "Tất cả sản phẩm";
+}
+
+<div class="container category-section py-4">
+    @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"] as string))
+    {
+        <h2 class="section-title">Kết quả tìm kiếm cho "@ViewData["CurrentFilter"]"</h2>
+    }
+    else
+    {
+        <h2 class="section-title">Tất Cả Sản Phẩm <i class="fa-solid fa-boxes-stacked"></i></h2>
+    }
+    <div class="text-center mb-4">
+        <a asp-controller="Product" asp-action="Add" class="btn btn-primary-outline"><i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới</a>
+    </div>
+
+    <div class="row g-4">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var product in Model)
+            {
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="product-card h-100">
+                        <div class="product-image">
+                            @if (!string.IsNullOrEmpty(product.ImageUrl))
+                            {
+                                <img src="@Url.Content(product.ImageUrl)" alt="@product.Name">
+                            }
+                            else
+                            {
+                                <img src="~/Image/placeholder.png" alt="No Image Available">
+                            }
+                            <div class="overlay">
+                                <a asp-controller="Product" asp-action="Display" asp-route-id="@product.Id" class="btn btn-secondary">Xem Chi Tiết</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">@product.Name</h3>
+                            <p class="product-price">@product.Price.ToString("N0")₫</p>
+                            <button class="btn btn-add">Thêm vào giỏ</button>
+                            <div class="d-flex justify-content-between mt-3 pt-3 border-top">
+                                <a asp-controller="Product" asp-action="Update" asp-route-id="@product.Id" class="btn btn-sm btn-outline-secondary rounded-pill"><i class="fa-solid fa-pen"></i> Sửa</a>
+                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger rounded-pill"><i class="fa-solid fa-trash"></i> Xóa</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p class="text-center text-dark">Chưa có sản phẩm nào.</p>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Script to handle 'Add to Cart' animation
+        document.querySelectorAll('.btn-add').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const card = this.closest('.product-card');
+                const img = card.querySelector('img');
+                const cartIcon = document.querySelector('.cart-icon');
+                const badge = cartIcon.querySelector('.badge');
+                const clone = img.cloneNode(true);
+                const imgRect = img.getBoundingClientRect();
+                const cartRect = cartIcon.getBoundingClientRect();
+
+                clone.style.position = 'fixed';
+                clone.style.top = imgRect.top + 'px';
+                clone.style.left = imgRect.left + 'px';
+                clone.style.width = imgRect.width + 'px';
+                clone.style.height = imgRect.height + 'px';
+                clone.style.zIndex = '9999';
+                clone.style.objectFit = 'cover';
+                clone.style.borderRadius = '20px';
+                clone.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                document.body.appendChild(clone);
+                
+                // Trigger animation
+                clone.style.animation = 'shatter-shake 0.5s forwards';
+
+                setTimeout(() => {
+                    clone.style.animation = 'none';
+                    clone.style.top = (cartRect.top + cartRect.height / 2 - 20) + 'px';
+                    clone.style.left = (cartRect.left + cartRect.width / 2 - 20) + 'px';
+                    clone.style.width = '40px';
+                    clone.style.height = '40px';
+                    clone.style.opacity = '0';
+                    clone.style.transform = 'rotate(720deg) scale(0.1)';
+                    clone.style.borderRadius = '50%';
+                }, 400);
+
+                setTimeout(() => {
+                    clone.remove();
+                    let count = parseInt(badge.innerText);
+                    badge.innerText = count + 1;
+                    cartIcon.style.animation = 'cart-bump 0.3s';
+                    setTimeout(() => { cartIcon.style.animation = 'none'; }, 300);
+                }, 1200);
+            });
+        });
+    </script>
+}
