@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using WebBan_1398.Models;
 using WebBan_1398.Repositories;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebBan_1398.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles=SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IProductRepository _productRepository;
