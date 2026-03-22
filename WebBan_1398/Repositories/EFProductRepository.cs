@@ -40,8 +40,11 @@ namespace WebBan_1398.Repositories
         public async Task DeleteAsync(int id)
         {
             var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<Product> GetNextProductAsync(int currentId)

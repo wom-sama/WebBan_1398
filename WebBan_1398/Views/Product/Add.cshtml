@@ -1,3 +1,4 @@
+@using WebBan_1398.Models
 @model WebBan_1398.Models.Product
 
 @{
@@ -24,7 +25,7 @@
                         <div class="mb-4">
                             <label asp-for="Price" class="form-label fw-bold">Giá</label>
                             <input asp-for="Price" class="form-control form-control-lg" placeholder="Nhập giá tiền..." />
-                            <span asp-validation-for="Price" aclass="text-danger"></span>
+                            <span asp-validation-for="Price" class="text-danger"></span>
                         </div>
 
                         <div class="mb-4">

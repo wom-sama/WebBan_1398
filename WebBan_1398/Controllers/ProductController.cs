@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebBan_1398.Controllers
 {
-    [Area("Admin")]
     [Authorize(Roles=SD.Role_Admin)]
     public class ProductController : Controller
     {
@@ -146,12 +145,47 @@ namespace WebBan_1398.Controllers
 
         private async Task<string> SaveImage(IFormFile image)
         {
-            var savePath = Path.Combine("wwwroot/Image", image.FileName); // Corrected path
-            using (var fileStream = new FileStream(savePath, FileMode.Create))
+            try
             {
-                await image.CopyToAsync(fileStream);
+                // Validate file
+                const long maxFileSize = 5 * 1024 * 1024; // 5MB
+                string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+                
+                // Check file size
+                if (image.Length > maxFileSize)
+                {
+                    throw new ArgumentException($"File size exceeds 5MB limit. Size: {image.Length / (1024 * 1024)}MB");
+                }
+                
+                // Check file extension
+                var fileExtension = Path.GetExtension(image.FileName).ToLower();
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    throw new ArgumentException($"File type '{fileExtension}' is not allowed. Allowed: jpg, jpeg, png, gif, webp");
+                }
+                
+                // Generate unique filename to prevent path traversal
+                var uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
+                var savePath = Path.Combine("wwwroot/Image", uniqueFileName);
+                
+                // Ensure directory exists
+                var directoryPath = Path.GetDirectoryName(savePath);
+                if (!string.IsNullOrEmpty(directoryPath) && !Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+                
+                using (var fileStream = new FileStream(savePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream);
+                }
+                
+                return "/Image/" + uniqueFileName;
             }
-            return "/Image/" + image.FileName; // Corrected returned path
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Error saving image: {ex.Message}", ex);
+            }
         }
     }
 }

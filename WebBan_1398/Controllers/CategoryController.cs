@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using WebBan_1398.Models;
 using WebBan_1398.Repositories;
 
 namespace WebBan_1398.Controllers
 {
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WebBan_1398.Models.Product>
+﻿@using WebBan_1398.Models
+@model IEnumerable<WebBan_1398.Models.Product>
 
 @{
     ViewData["Title"] = "Trang chủ";
@@ -20,9 +21,12 @@
 
 <div id="featured-products" class="container category-section py-4">
     <h2 class="section-title">Sản Phẩm Nổi Bật <i class="fa-solid fa-star"></i></h2>
-    <div class="text-center mb-4">
-        <a asp-controller="Product" asp-action="Add" class="btn btn-primary-outline"><i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới</a>
-    </div>
+    @if (User.IsInRole(SD.Role_Admin))
+    {
+        <div class="text-center mb-4">
+            <a asp-controller="Product" asp-action="Add" class="btn btn-primary-outline"><i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới</a>
+        </div>
+    }
 
     <div class="row g-4">
         @if (Model != null && Model.Any())
@@ -48,10 +52,13 @@
                             <h3 class="product-name">@product.Name</h3>
                             <p class="product-price">@product.Price.ToString("N0")₫</p>
                             <button class="btn btn-add">Thêm vào giỏ</button>
-                            <div class="d-flex justify-content-between mt-3 pt-3 border-top">
-                                <a asp-controller="Product" asp-action="Update" asp-route-id="@product.Id" class="btn btn-sm btn-outline-secondary rounded-pill"><i class="fa-solid fa-pen"></i> Sửa</a>
-                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger rounded-pill"><i class="fa-solid fa-trash"></i> Xóa</a>
-                            </div>
+                            @if (User.IsInRole(SD.Role_Admin))
+                            {
+                                <div class="d-flex justify-content-between mt-3 pt-3 border-top">
+                                    <a asp-controller="Product" asp-action="Update" asp-route-id="@product.Id" class="btn btn-sm btn-outline-secondary rounded-pill"><i class="fa-solid fa-pen"></i> Sửa</a>
+                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger rounded-pill"><i class="fa-solid fa-trash"></i> Xóa</a>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
