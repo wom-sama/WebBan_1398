@@ -1,0 +1,22 @@
+@page
+@{
+    ViewData["Title"] = "Không có quyền truy cập";
+}
+
+<section class="auth-shell">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="auth-card shadow-lg border-0 text-center p-5">
+                    <span class="auth-kicker">Access Restricted</span>
+                    <h1 class="mb-3">@ViewData["Title"]</h1>
+                    <p class="mb-4">Bạn không có quyền truy cập vào khu vực này. Chỉ tài khoản có quyền phù hợp mới được phép sử dụng.</p>
+                    <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
+                        <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Về trang chủ</a>
+                        <a class="btn btn-primary-outline" asp-area="Identity" asp-page="/Account/Login">Đăng nhập tài khoản khác</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

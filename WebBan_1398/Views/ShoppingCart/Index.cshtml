@@ -1,0 +1,77 @@
+@model ShoppingCart
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    var returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
+}
+
+<div class="container py-5">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+        <div>
+            <h1 class="section-title mb-2">Giỏ Hàng Của Bạn <i class="fa-solid fa-cart-shopping"></i></h1>
+            <p class="text-muted mb-0">Kiểm tra lại sản phẩm trước khi tiến hành đặt hàng.</p>
+        </div>
+        <a asp-area="" asp-controller="Product" asp-action="Index" class="btn btn-primary-outline">Tiếp tục mua sắm</a>
+    </div>
+
+    @if (!Model.Items.Any())
+    {
+        <div class="empty-state">
+            <h3>Giỏ hàng đang trống</h3>
+            <p>Hãy thêm sản phẩm bạn yêu thích để bắt đầu đặt hàng.</p>
+            <a asp-area="" asp-controller="Product" asp-action="Index" class="btn btn-primary mt-3">Xem sản phẩm</a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="table-responsive cart-table-wrap">
+                    <table class="table align-middle cart-table">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th class="text-center">Số lượng</th>
+                                <th class="text-end">Đơn giá</th>
+                                <th class="text-end">Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">@item.Name</td>
+                                    <td class="text-center">@item.Quantity</td>
+                                    <td class="text-end">@item.Price.ToString("N0")₫</td>
+                                    <td class="text-end">@item.LineTotal.ToString("N0")₫</td>
+                                    <td class="text-end">
+                                        <a asp-action="RemoveFromCart" asp-route-productId="@item.ProductId" asp-route-returnUrl="@returnUrl" class="btn btn-sm btn-outline-danger rounded-pill">Xóa</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="summary-card shadow-sm">
+                    <h3>Tóm tắt đơn hàng</h3>
+                    <div class="summary-line">
+                        <span>Tổng số lượng</span>
+                        <strong>@Model.TotalItems</strong>
+                    </div>
+                    <div class="summary-line">
+                        <span>Tạm tính</span>
+                        <strong>@Model.TotalAmount.ToString("N0")₫</strong>
+                    </div>
+                    <div class="summary-line total">
+                        <span>Tổng cộng</span>
+                        <strong>@Model.TotalAmount.ToString("N0")₫</strong>
+                    </div>
+                    <a asp-action="Checkout" class="btn btn-primary w-100 mt-3">Tiến hành đặt hàng</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

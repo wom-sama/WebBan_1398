@@ -1,59 +1,97 @@
-﻿<!DOCTYPE html>
+@using WebBan_1398.Extensions
+@{
+    var cart = Context.Session.GetObjectFromJson<ShoppingCart>("Cart") ?? new ShoppingCart();
+}
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"] - Hoài Nam Shop</title>
-    <!-- Bootstrap CSS -->
+    <title>@ViewData["Title"] - HNKStore</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Đảm bảo bạn đã copy style.css vào thư mục wwwroot/css/ -->
     <link rel="stylesheet" href="~/css/Style.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
-    <!-- Thanh điều hướng -->
     <nav id="main-nav" class="navbar navbar-expand-lg bg-white sticky-top">
         <div class="container">
-            <a class="navbar-brand" id="logo" asp-controller="Home" asp-action="Index">
+            <a class="navbar-brand" id="logo" asp-area="" asp-controller="Home" asp-action="Index">
                 <i class="fa-solid fa-heart"></i> HNKStore
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Mở menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav gap-lg-4 my-3 my-lg-0">
-                    <li class="nav-item"><a asp-controller="Home" asp-action="Index" class="nav-link menu-link">Trang Chủ</a></li>
-                    <li class="nav-item"><a asp-controller="Product" asp-action="Index" class="nav-link menu-link">Sản Phẩm</a></li>
-                    <li class="nav-item"><a href="/#new-arrivals" class="nav-link menu-link">Mới Về</a></li>
-                    <li class="nav-item"><a href="/#limited-edition" class="nav-link menu-link">Giới Hạn</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Quản Lý
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" asp-controller="Category" asp-action="Index">Loại Sản Phẩm</a></li>
-                            <li><a class="dropdown-item" asp-controller="Product" asp-action="Add">Thêm Sản Phẩm</a></li>
-                        </ul>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto align-items-lg-center gap-lg-2">
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
                     </li>
-                    <li class="nav-item"><a href="#footer" class="nav-link menu-link">Liên Hệ</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" asp-area="" asp-controller="Product" asp-action="Index">Sản phẩm</a>
+                    </li>
+                    @if (User.IsInRole(SD.Role_Admin))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link menu-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Quản trị
+                            </a>
+                            <ul class="dropdown-menu shadow-sm border-0 admin-dropdown">
+                                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Bảng điều khiển</a></li>
+                                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Quản lý sản phẩm</a></li>
+                                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Quản lý danh mục</a></li>
+                                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Order" asp-action="Index">Quản lý đơn hàng</a></li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
-                <partial name ="_LoginPartial" />
-            </div>
 
-            <!-- Search Form -->
-            <form asp-controller="Product" asp-action="Index" method="get" class="d-flex search-form mx-lg-3">
-                <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search" name="searchString">
-                <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-search"></i></button>
-            </form>
+                <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3 ms-lg-auto">
+                    <form asp-area="" asp-controller="Product" asp-action="Index" method="get" class="d-flex search-form">
+                        <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search" name="searchString" value="@Context.Request.Query["searchString"]">
+                        <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-search"></i></button>
+                    </form>
 
-            <div class="cart-icon ms-lg-3">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span class="badge">3</span>
+                    <a asp-area="" asp-controller="ShoppingCart" asp-action="Index" class="cart-icon text-decoration-none">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="badge bg-danger">@cart.TotalItems</span>
+                    </a>
+
+                    <partial name="_LoginPartial" />
+                </div>
             </div>
         </div>
     </nav>
+
+    @if (TempData["SuccessMessage"] is string successMessage)
+    {
+        <div class="container site-alerts">
+            <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+                @successMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] is string errorMessage)
+    {
+        <div class="container site-alerts">
+            <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+                @errorMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    }
+
+    @if (TempData["InfoMessage"] is string infoMessage)
+    {
+        <div class="container site-alerts">
+            <div class="alert alert-info alert-dismissible fade show shadow-sm" role="alert">
+                @infoMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    }
 
     @RenderBody()
 
@@ -62,14 +100,14 @@
             <div class="row footer-container">
                 <div class="col-md-4 footer-section">
                     <h3>Về HNKStore</h3>
-                    <p> chính hãng với giá cả hợp lý. Chúng tôi cam kết mang lại niềm vui cho mọi khách hàng.</p>
+                    <p>Cửa hàng figure anime với phong cách trẻ trung, giao diện hiện đại và đầy đủ tính năng mua sắm, quản trị.</p>
                 </div>
                 <div class="col-md-4 footer-section">
                     <h3>Liên Kết Nhanh</h3>
                     <ul>
-                        <li><a asp-controller="Home" asp-action="Index">Trang Chủ</a></li>
-                        <li><a asp-controller="Product" asp-action="Index">Sản Phẩm Mới</a></li>
-                        <li><a href="#">Chính Sách Bảo Hành</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Trang Chủ</a></li>
+                        <li><a asp-area="" asp-controller="Product" asp-action="Index">Tất Cả Sản Phẩm</a></li>
+                        <li><a asp-area="" asp-controller="ShoppingCart" asp-action="Index">Giỏ Hàng</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 footer-section">
@@ -89,11 +127,8 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- jQuery -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

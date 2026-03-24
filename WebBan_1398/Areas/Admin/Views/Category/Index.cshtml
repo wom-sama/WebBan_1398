@@ -1,0 +1,43 @@
+@model IEnumerable<WebBan_1398.Models.Category>
+
+@{
+    ViewData["Title"] = "Quản lý loại sản phẩm";
+}
+
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-lg">
+        <div class="card-header bg-light py-4 d-flex justify-content-between align-items-center">
+            <h2 class="section-title mb-0">Danh Sách Loại Sản Phẩm <i class="fa-solid fa-tags"></i></h2>
+            <a asp-action="Add" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm Mới</a>
+        </div>
+        <div class="card-body p-4">
+            @if (Model != null && Model.Any())
+            {
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Tên Loại Sản Phẩm</th>
+                            <th scope="col" class="text-end">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var category in Model)
+                        {
+                            <tr>
+                                <td>@category.Name</td>
+                                <td class="text-end">
+                                    <a asp-action="Update" asp-route-id="@category.Id" class="btn btn-sm btn-outline-primary rounded-pill"><i class="fa-solid fa-pen"></i> Sửa</a>
+                                    <a asp-action="Delete" asp-route-id="@category.Id" class="btn btn-sm btn-outline-danger rounded-pill"><i class="fa-solid fa-trash"></i> Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="text-center">Chưa có loại sản phẩm nào.</p>
+            }
+        </div>
+    </div>
+</div>

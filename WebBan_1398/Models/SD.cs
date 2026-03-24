@@ -1,4 +1,4 @@
-﻿namespace WebBan_1398.Models
+namespace WebBan_1398.Models
 {
     public static class SD
     {

@@ -15,7 +15,7 @@ namespace WebBan_1398.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var products = await _productRepository.GetAllAsync();
+            var products = (await _productRepository.GetAllAsync()).Take(8);
             return View(products);
         }
     }

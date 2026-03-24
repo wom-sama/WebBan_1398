@@ -513,3 +513,232 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
+
+.navbar-toggler {
+    border-color: rgba(255, 105, 180, 0.4);
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.18);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,105,180,0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.site-alerts {
+    padding-top: 1rem;
+}
+
+.admin-dropdown {
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.admin-dropdown .dropdown-item {
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+}
+
+.admin-dropdown .dropdown-item:hover {
+    background: #fff0f6;
+    color: #ff1493;
+}
+
+.auth-shell {
+    background: linear-gradient(180deg, rgba(255, 221, 225, 0.7) 0%, rgba(255, 245, 250, 1) 100%);
+    min-height: calc(100vh - 220px);
+}
+
+.auth-card {
+    border-radius: 28px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.auth-aside {
+    background: linear-gradient(145deg, #ff9bbf 0%, #ff69b4 55%, #ff4fa2 100%);
+    color: #fff;
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-aside h1 {
+    font-size: 2.2rem;
+    margin: 0.5rem 0 1rem;
+}
+
+.auth-kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.8rem;
+    opacity: 0.85;
+}
+
+.auth-benefits {
+    margin: 1.5rem 0 0;
+    padding-left: 1.1rem;
+}
+
+.auth-benefits li {
+    margin-bottom: 0.75rem;
+}
+
+.auth-form-wrap {
+    padding: 3rem 2.5rem;
+}
+
+.auth-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    align-items: center;
+    font-weight: 600;
+}
+
+.auth-links a {
+    color: #ff1493;
+    text-decoration: none;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.empty-state {
+    text-align: center;
+    background: #fff;
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    box-shadow: 0 10px 35px rgba(255, 105, 180, 0.12);
+}
+
+.empty-state h3 {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.info-card,
+.summary-card,
+.admin-stat-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 1.75rem;
+    box-shadow: 0 12px 35px rgba(255, 105, 180, 0.12);
+}
+
+.info-card h3,
+.summary-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 105, 180, 0.12);
+}
+
+.summary-line.total {
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-bottom: none;
+}
+
+.cart-table-wrap {
+    background: #fff;
+    border-radius: 24px;
+    padding: 1rem 1rem 0;
+    box-shadow: 0 12px 35px rgba(255, 105, 180, 0.12);
+}
+
+.cart-table thead th {
+    color: #ff1493;
+    border-bottom-width: 1px;
+}
+
+.product-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.gallery-thumb,
+.admin-product-thumb,
+.form-preview-image {
+    border-radius: 16px;
+    object-fit: cover;
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.12);
+}
+
+.gallery-thumb {
+    width: 88px;
+    height: 88px;
+}
+
+.admin-product-thumb {
+    width: 88px;
+    height: 88px;
+    flex-shrink: 0;
+}
+
+.form-preview-image {
+    width: 100%;
+    max-width: 280px;
+    height: 280px;
+}
+
+.admin-stat-card {
+    text-align: center;
+}
+
+.admin-stat-card strong {
+    display: block;
+    font-size: 2.2rem;
+    color: #ff1493;
+}
+
+.stat-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+}
+
+.order-success-card {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.success-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: rgba(25, 135, 84, 0.12);
+    color: #198754;
+    font-size: 2.5rem;
+}
+
+@media (max-width: 991.98px) {
+    .auth-aside,
+    .auth-form-wrap {
+        padding: 2rem 1.5rem;
+    }
+
+    .summary-card,
+    .info-card,
+    .admin-stat-card {
+        padding: 1.25rem;
+    }
+}

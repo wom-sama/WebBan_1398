@@ -10,22 +10,29 @@ namespace WebBan_1398.Repositories
         {
             _context = context;
         }
-        public async Task<IEnumerable<Product>> GetAllAsync(string searchString = null)
+        public async Task<IEnumerable<Product>> GetAllAsync(string? searchString = null)
         {
-            var products = _context.Products.Include(p => p.Category).AsQueryable();
+            var products = _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Images)
+                .AsQueryable();
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                products = products.Where(p => p.Name.ToUpper().Contains(searchString.ToUpper()));
+                var normalizedSearch = searchString.Trim().ToUpper();
+                products = products.Where(p =>
+                    p.Name.ToUpper().Contains(normalizedSearch) ||
+                    (p.Category != null && p.Category.Name.ToUpper().Contains(normalizedSearch)));
             }
 
-            return await products.ToListAsync();
+            return await products.OrderByDescending(p => p.Id).ToListAsync();
         }
-        public async Task<Product> GetByIdAsync(int id)
+        public async Task<Product?> GetByIdAsync(int id)
         {
-            // return await _context.Products.FindAsync(id);
-            // lấy thông tin kèm theo category
-            return await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Images)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
         public async Task AddAsync(Product product)
         {
@@ -47,7 +54,7 @@ namespace WebBan_1398.Repositories
             }
         }
 
-        public async Task<Product> GetNextProductAsync(int currentId)
+        public async Task<Product?> GetNextProductAsync(int currentId)
         {
             return await _context.Products
                 .Where(p => p.Id > currentId)
@@ -55,7 +62,7 @@ namespace WebBan_1398.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<Product> GetPreviousProductAsync(int currentId)
+        public async Task<Product?> GetPreviousProductAsync(int currentId)
         {
             return await _context.Products
                 .Where(p => p.Id < currentId)

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = Model.Name;
+    var returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
 }
 
 <div class="container my-5">
@@ -16,11 +17,21 @@
                 {
                     <img src="~/Image/placeholder.png" class="img-fluid" alt="No Image Available">
                 }
+
+                @if (Model.Images.Any())
+                {
+                    <div class="product-gallery p-3">
+                        @foreach (var image in Model.Images)
+                        {
+                            <img src="@Url.Content(image.Url)" alt="@Model.Name" class="gallery-thumb">
+                        }
+                    </div>
+                }
             </div>
             <div class="col-lg-6 d-flex flex-column">
                 <div class="card-body p-5">
                     <h1 class="product-detail-title">@Model.Name</h1>
-                    
+
                     @if (Model.Category != null)
                     {
                         <div class="category-badge">
@@ -29,88 +40,43 @@
                     }
 
                     <p class="product-detail-price">@Model.Price.ToString("N0")₫</p>
-                    
+
                     <div class="product-detail-description my-4">
-                        <h5 class="fw-bold">Mô Tả Sản Phẩm</h5>
+                        <h5 class="fw-bold">Mô tả sản phẩm</h5>
                         <p>@Model.Description</p>
                     </div>
 
                     <div class="d-grid gap-2 mt-auto">
-                        <button class="btn btn-primary btn-lg btn-add"><i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ hàng</button>
-                        <a asp-action="Index" class="btn btn-outline-secondary mt-2">Quay lại danh sách</a>
+                        <a asp-area="" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@Model.Id" asp-route-quantity="1" asp-route-returnUrl="@returnUrl" class="btn btn-primary btn-lg">
+                            <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ hàng
+                        </a>
+                        <a asp-area="" asp-controller="Product" asp-action="Index" class="btn btn-primary-outline">Quay lại danh sách</a>
                         <div class="d-flex justify-content-between mt-3">
                             @if (ViewBag.PreviousProductId != null)
                             {
-                                <a href="@Url.Action("Display", new { id = ViewBag.PreviousProductId })" class="btn btn-outline-primary"><i class="fa-solid fa-arrow-left"></i> Sản phẩm trước</a>
+                                <a asp-area="" asp-controller="Product" asp-action="Display" asp-route-id="@ViewBag.PreviousProductId" class="btn btn-outline-primary"><i class="fa-solid fa-arrow-left"></i> Sản phẩm trước</a>
                             }
                             else
                             {
-                                <a href="#" class="btn btn-outline-primary disabled"><i class="fa-solid fa-arrow-left"></i> Sản phẩm trước</a>
+                                <span></span>
                             }
 
                             @if (ViewBag.NextProductId != null)
                             {
-                                <a href="@Url.Action("Display", new { id = ViewBag.NextProductId })" class="btn btn-outline-primary">Sản phẩm tiếp theo <i class="fa-solid fa-arrow-right"></i></a>
-                            }
-                            else
-                            {
-                                <a href="#" class="btn btn-outline-primary disabled">Sản phẩm tiếp theo <i class="fa-solid fa-arrow-right"></i></a>
+                                <a asp-area="" asp-controller="Product" asp-action="Display" asp-route-id="@ViewBag.NextProductId" class="btn btn-outline-primary">Sản phẩm tiếp theo <i class="fa-solid fa-arrow-right"></i></a>
                             }
                         </div>
                     </div>
                 </div>
-                 <div class="card-footer bg-light text-center p-3">
-                    <a asp-controller="Product" asp-action="Update" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-primary rounded-pill mx-1"><i class="fa-solid fa-pen"></i> Sửa</a>
-                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-danger rounded-pill mx-1"><i class="fa-solid fa-trash"></i> Xóa</a>
-                </div>
+
+                @if (User.IsInRole(SD.Role_Admin))
+                {
+                    <div class="card-footer bg-light text-center p-3 d-flex flex-wrap justify-content-center gap-2">
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Update" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-primary rounded-pill"><i class="fa-solid fa-pen"></i> Sửa</a>
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-danger rounded-pill"><i class="fa-solid fa-trash"></i> Xóa</a>
+                    </div>
+                }
             </div>
         </div>
     </div>
 </div>
-
-
-
-@section Scripts {
-    <script>
-        // Script to handle 'Add to Cart' animation
-        document.querySelector('.btn-add').addEventListener('click', function(e) {
-            const img = document.querySelector('.product-detail-image-wrapper img');
-            const cartIcon = document.querySelector('.cart-icon');
-            const badge = cartIcon.querySelector('.badge');
-            const clone = img.cloneNode(true);
-            const imgRect = img.getBoundingClientRect();
-            const cartRect = cartIcon.getBoundingClientRect();
-
-            clone.style.position = 'fixed';
-            clone.style.top = imgRect.top + 'px';
-            clone.style.left = imgRect.left + 'px';
-            clone.style.width = imgRect.width + 'px';
-            clone.style.height = 'auto';
-            clone.style.zIndex = '9999';
-            clone.style.borderRadius = '10px';
-            clone.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-            document.body.appendChild(clone);
-            
-            clone.style.animation = 'shatter-shake 0.5s forwards';
-
-            setTimeout(() => {
-                clone.style.animation = 'none';
-                clone.style.top = (cartRect.top + cartRect.height / 2 - 20) + 'px';
-                clone.style.left = (cartRect.left + cartRect.width / 2 - 20) + 'px';
-                clone.style.width = '40px';
-                clone.style.height = '40px';
-                clone.style.opacity = '0';
-                clone.style.transform = 'rotate(720deg) scale(0.1)';
-                clone.style.borderRadius = '50%';
-            }, 400);
-
-            setTimeout(() => {
-                clone.remove();
-                let count = parseInt(badge.innerText);
-                badge.innerText = count + 1;
-                cartIcon.style.animation = 'cart-bump 0.3s';
-                setTimeout(() => { cartIcon.style.animation = 'none'; }, 300);
-            }, 1200);
-        });
-    </script>
-}

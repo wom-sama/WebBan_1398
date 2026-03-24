@@ -1,0 +1,65 @@
+@model Order
+@using WebBan_1398.Extensions
+
+@{
+    ViewData["Title"] = "Thanh toán";
+    var cart = Context.Session.GetObjectFromJson<ShoppingCart>("Cart") ?? new ShoppingCart();
+}
+
+<div class="container py-5">
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="summary-card shadow-sm">
+                <h1 class="section-title mb-4">Thông Tin Đặt Hàng</h1>
+                <form asp-action="Checkout" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="ShippingAddress" class="form-label"></label>
+                        <textarea asp-for="ShippingAddress" class="form-control" rows="3" placeholder="Nhập đầy đủ địa chỉ nhận hàng..."></textarea>
+                        <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Notes" class="form-label"></label>
+                        <textarea asp-for="Notes" class="form-control" rows="4" placeholder="Ví dụ: gọi trước khi giao, giờ nhận hàng..."></textarea>
+                        <span asp-validation-for="Notes" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row gap-3 mt-4">
+                        <a asp-action="Index" class="btn btn-primary-outline">Quay lại giỏ hàng</a>
+                        <button type="submit" class="btn btn-primary">Xác nhận đặt hàng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="summary-card shadow-sm">
+                <h3>Đơn hàng của bạn</h3>
+                @if (cart.Items.Any())
+                {
+                    @foreach (var item in cart.Items)
+                    {
+                        <div class="summary-line">
+                            <span>@item.Name x @item.Quantity</span>
+                            <strong>@item.LineTotal.ToString("N0")₫</strong>
+                        </div>
+                    }
+                    <div class="summary-line total">
+                        <span>Tổng cộng</span>
+                        <strong>@cart.TotalAmount.ToString("N0")₫</strong>
+                    </div>
+                }
+                else
+                {
+                    <p class="mb-0">Giỏ hàng đang trống.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

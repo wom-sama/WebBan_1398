@@ -1,0 +1,61 @@
+@model WebBan_1398.Models.Product
+
+@{
+    ViewData["Title"] = "Thêm sản phẩm";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="summary-card shadow-sm">
+                <h1 class="section-title mb-4">Thêm Sản Phẩm Mới</h1>
+                <form asp-area="Admin" asp-controller="Product" asp-action="Add" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Price" class="form-label"></label>
+                            <input asp-for="Price" class="form-control" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="CategoryId" class="form-label">Danh mục</label>
+                            <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-select">
+                                <option value="">-- Chọn danh mục --</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="imageUrl" class="form-label">Ảnh đại diện</label>
+                            <input type="file" name="imageUrl" id="imageUrl" class="form-control" accept=".jpg,.jpeg,.png,.gif,.webp" />
+                        </div>
+                        <div class="col-12">
+                            <label for="imageUrls" class="form-label">Ảnh bổ sung</label>
+                            <input type="file" name="imageUrls" id="imageUrls" class="form-control" multiple accept=".jpg,.jpeg,.png,.gif,.webp" />
+                            <div class="form-text">Có thể chọn nhiều ảnh để tạo gallery cho sản phẩm.</div>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row gap-3 mt-4">
+                        <button type="submit" class="btn btn-primary">Lưu sản phẩm</button>
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-primary-outline">Quay lại danh sách</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

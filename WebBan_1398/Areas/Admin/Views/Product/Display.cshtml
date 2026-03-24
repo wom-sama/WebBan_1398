@@ -1,0 +1,43 @@
+@model WebBan_1398.Models.Product
+
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+}
+
+<div class="container my-5">
+    <div class="card product-detail-card shadow-lg border-0 rounded-lg overflow-hidden">
+        <div class="row g-0">
+            <div class="col-lg-6 product-detail-image-wrapper">
+                <img src="@Url.Content(Model.ImageUrl ?? "~/Image/placeholder.png")" class="img-fluid" alt="@Model.Name">
+                @if (Model.Images.Any())
+                {
+                    <div class="product-gallery p-3">
+                        @foreach (var image in Model.Images)
+                        {
+                            <img src="@Url.Content(image.Url)" alt="@Model.Name" class="gallery-thumb">
+                        }
+                    </div>
+                }
+            </div>
+            <div class="col-lg-6 d-flex flex-column">
+                <div class="card-body p-5">
+                    <h1 class="product-detail-title">@Model.Name</h1>
+                    <div class="category-badge">
+                        <i class="fa-solid fa-tag me-2"></i>@(Model.Category?.Name ?? "Chưa phân loại")
+                    </div>
+                    <p class="product-detail-price">@Model.Price.ToString("N0")₫</p>
+                    <div class="product-detail-description my-4">
+                        <h5 class="fw-bold">Mô tả sản phẩm</h5>
+                        <p>@Model.Description</p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 mt-auto">
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Update" asp-route-id="@Model.Id" class="btn btn-primary">Chỉnh sửa</a>
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-primary-outline">Xóa sản phẩm</a>
+                        <a asp-area="" asp-controller="Product" asp-action="Display" asp-route-id="@Model.Id" class="btn btn-outline-primary rounded-pill">Xem ở cửa hàng</a>
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary rounded-pill">Quay lại</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

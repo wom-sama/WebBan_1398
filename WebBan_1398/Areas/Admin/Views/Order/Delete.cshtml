@@ -1,0 +1,22 @@
+@model WebBan_1398.Models.Order
+
+@{
+    ViewData["Title"] = "Xóa đơn hàng";
+}
+
+<div class="container py-5">
+    <div class="summary-card shadow-sm">
+        <h1 class="section-title mb-3">Xác Nhận Xóa Đơn Hàng</h1>
+        <p>Bạn có chắc chắn muốn xóa đơn hàng <strong>#@Model.Id</strong> của <strong>@(Model.ApplicationUser?.FullName ?? Model.ApplicationUser?.Email ?? "khách hàng")</strong> không?</p>
+        <p class="text-danger fw-semibold">Hành động này sẽ xóa luôn toàn bộ chi tiết đơn hàng.</p>
+
+        <div class="summary-line"><span>Ngày đặt</span><strong>@Model.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</strong></div>
+        <div class="summary-line"><span>Tổng tiền</span><strong>@Model.TotalPrice.ToString("N0")₫</strong></div>
+
+        <form asp-area="Admin" asp-controller="Order" asp-action="Delete" method="post" class="d-flex flex-column flex-md-row gap-3 mt-4">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-primary">Xóa đơn hàng</button>
+            <a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary-outline">Hủy</a>
+        </form>
+    </div>
+</div>

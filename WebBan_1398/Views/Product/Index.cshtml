@@ -1,26 +1,40 @@
 @model IEnumerable<WebBan_1398.Models.Product>
 
 @{
-    ViewData["Title"] = "Tất cả sản phẩm";
+    ViewData["Title"] = "Sản phẩm";
+    var products = Model ?? Enumerable.Empty<WebBan_1398.Models.Product>();
+    var currentFilter = ViewData["CurrentFilter"] as string;
+    var returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
 }
 
-<div class="container category-section py-4">
-    @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"] as string))
-    {
-        <h2 class="section-title">Kết quả tìm kiếm cho "@ViewData["CurrentFilter"]"</h2>
-    }
-    else
-    {
-        <h2 class="section-title">Tất Cả Sản Phẩm <i class="fa-solid fa-boxes-stacked"></i></h2>
-    }
-    <div class="text-center mb-4">
-        <a asp-controller="Product" asp-action="Add" class="btn btn-primary-outline"><i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới</a>
+<div class="container category-section py-5">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+        <div>
+            @if (!string.IsNullOrWhiteSpace(currentFilter))
+            {
+                <h1 class="section-title mb-2">Kết quả tìm kiếm cho "@currentFilter"</h1>
+                <p class="text-muted mb-0">Danh sách bên dưới đã được lọc theo từ khóa bạn vừa nhập.</p>
+            }
+            else
+            {
+                <h1 class="section-title mb-2">Tất Cả Sản Phẩm <i class="fa-solid fa-boxes-stacked"></i></h1>
+                <p class="text-muted mb-0">Duyệt toàn bộ sản phẩm đang có trong cửa hàng.</p>
+            }
+        </div>
+
+        @if (User.IsInRole(SD.Role_Admin))
+        {
+            <div class="d-flex flex-wrap gap-2">
+                <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-primary-outline">Quản lý sản phẩm</a>
+                <a asp-area="Admin" asp-controller="Product" asp-action="Add" class="btn btn-primary">Thêm sản phẩm</a>
+            </div>
+        }
     </div>
 
     <div class="row g-4">
-        @if (Model != null && Model.Any())
+        @if (products.Any())
         {
-            @foreach (var product in Model)
+            @foreach (var product in products)
             {
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="product-card h-100">
@@ -34,17 +48,26 @@
                                 <img src="~/Image/placeholder.png" alt="No Image Available">
                             }
                             <div class="overlay">
-                                <a asp-controller="Product" asp-action="Display" asp-route-id="@product.Id" class="btn btn-secondary">Xem Chi Tiết</a>
+                                <a asp-area="" asp-controller="Product" asp-action="Display" asp-route-id="@product.Id" class="btn btn-secondary">Xem Chi Tiết</a>
                             </div>
                         </div>
                         <div class="product-info">
                             <h3 class="product-name">@product.Name</h3>
+                            @if (product.Category != null)
+                            {
+                                <p class="text-muted mb-1">@product.Category.Name</p>
+                            }
                             <p class="product-price">@product.Price.ToString("N0")₫</p>
-                            <button class="btn btn-add">Thêm vào giỏ</button>
-                            <div class="d-flex justify-content-between mt-3 pt-3 border-top">
-                                <a asp-controller="Product" asp-action="Update" asp-route-id="@product.Id" class="btn btn-sm btn-outline-secondary rounded-pill"><i class="fa-solid fa-pen"></i> Sửa</a>
-                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger rounded-pill"><i class="fa-solid fa-trash"></i> Xóa</a>
-                            </div>
+                            <a asp-area="" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@product.Id" asp-route-quantity="1" asp-route-returnUrl="@returnUrl" class="btn btn-add">
+                                Thêm vào giỏ
+                            </a>
+                            @if (User.IsInRole(SD.Role_Admin))
+                            {
+                                <div class="d-flex justify-content-between mt-3 pt-3 border-top">
+                                    <a asp-area="Admin" asp-controller="Product" asp-action="Update" asp-route-id="@product.Id" class="btn btn-sm btn-outline-secondary rounded-pill"><i class="fa-solid fa-pen"></i> Sửa</a>
+                                    <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger rounded-pill"><i class="fa-solid fa-trash"></i> Xóa</a>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -53,58 +76,12 @@
         else
         {
             <div class="col-12">
-                <p class="text-center text-dark">Chưa có sản phẩm nào.</p>
+                <div class="empty-state">
+                    <h3>Không tìm thấy sản phẩm phù hợp</h3>
+                    <p>Hãy thử lại với từ khóa khác hoặc quay về danh sách sản phẩm đầy đủ.</p>
+                    <a asp-area="" asp-controller="Product" asp-action="Index" class="btn btn-primary mt-3">Xem tất cả sản phẩm</a>
+                </div>
             </div>
         }
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        // Script to handle 'Add to Cart' animation
-        document.querySelectorAll('.btn-add').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const card = this.closest('.product-card');
-                const img = card.querySelector('img');
-                const cartIcon = document.querySelector('.cart-icon');
-                const badge = cartIcon.querySelector('.badge');
-                const clone = img.cloneNode(true);
-                const imgRect = img.getBoundingClientRect();
-                const cartRect = cartIcon.getBoundingClientRect();
-
-                clone.style.position = 'fixed';
-                clone.style.top = imgRect.top + 'px';
-                clone.style.left = imgRect.left + 'px';
-                clone.style.width = imgRect.width + 'px';
-                clone.style.height = imgRect.height + 'px';
-                clone.style.zIndex = '9999';
-                clone.style.objectFit = 'cover';
-                clone.style.borderRadius = '20px';
-                clone.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-                document.body.appendChild(clone);
-                
-                // Trigger animation
-                clone.style.animation = 'shatter-shake 0.5s forwards';
-
-                setTimeout(() => {
-                    clone.style.animation = 'none';
-                    clone.style.top = (cartRect.top + cartRect.height / 2 - 20) + 'px';
-                    clone.style.left = (cartRect.left + cartRect.width / 2 - 20) + 'px';
-                    clone.style.width = '40px';
-                    clone.style.height = '40px';
-                    clone.style.opacity = '0';
-                    clone.style.transform = 'rotate(720deg) scale(0.1)';
-                    clone.style.borderRadius = '50%';
-                }, 400);
-
-                setTimeout(() => {
-                    clone.remove();
-                    let count = parseInt(badge.innerText);
-                    badge.innerText = count + 1;
-                    cartIcon.style.animation = 'cart-bump 0.3s';
-                    setTimeout(() => { cartIcon.style.animation = 'none'; }, 300);
-                }, 1200);
-            });
-        });
-    </script>
-}

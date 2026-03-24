@@ -1,0 +1,44 @@
+@model WebBan_1398.Models.OrderConfirmationViewModel
+
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+}
+
+<div class="container py-5">
+    <div class="summary-card shadow-sm order-success-card">
+        <div class="text-center mb-4">
+            <span class="success-icon"><i class="fa-solid fa-circle-check"></i></span>
+            <h1 class="section-title mt-3">Đặt hàng thành công</h1>
+            <p class="text-muted mb-0">Cảm ơn bạn đã mua sắm tại HNKStore. Đơn hàng của bạn đã được ghi nhận.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <h3>Thông tin đơn hàng</h3>
+                <div class="summary-line"><span>Mã đơn hàng</span><strong>#@Model.Order.Id</strong></div>
+                <div class="summary-line"><span>Ngày đặt</span><strong>@Model.Order.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</strong></div>
+                <div class="summary-line"><span>Địa chỉ giao hàng</span><strong>@Model.Order.ShippingAddress</strong></div>
+                <div class="summary-line"><span>Ghi chú</span><strong>@(string.IsNullOrWhiteSpace(Model.Order.Notes) ? "Không có" : Model.Order.Notes)</strong></div>
+                <div class="summary-line total"><span>Tổng thanh toán</span><strong>@Model.Order.TotalPrice.ToString("N0")₫</strong></div>
+            </div>
+            <div class="col-lg-6">
+                <h3>Sản phẩm đã đặt</h3>
+                @foreach (var item in Model.Items)
+                {
+                    <div class="summary-line">
+                        <span>@item.Name x @item.Quantity</span>
+                        <strong>@item.LineTotal.ToString("N0")₫</strong>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="d-flex flex-column flex-md-row justify-content-center gap-3 mt-5">
+            <a asp-area="" asp-controller="Product" asp-action="Index" class="btn btn-primary">Tiếp tục mua sắm</a>
+            @if (User.IsInRole(SD.Role_Admin))
+            {
+                <a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@Model.Order.Id" class="btn btn-primary-outline">Xem trong quản trị</a>
+            }
+        </div>
+    </div>
+</div>

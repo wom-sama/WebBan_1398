@@ -1,16 +1,16 @@
-﻿@using WebBan_1398.Models
 @model IEnumerable<WebBan_1398.Models.Product>
 
 @{
     ViewData["Title"] = "Trang chủ";
+    var products = Model ?? Enumerable.Empty<WebBan_1398.Models.Product>();
+    var returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
 }
 
-<!-- Hero Banner -->
 <header id="hero-banner">
     <div class="container">
         <h1 class="hero-title">Thế Giới Figure Anime</h1>
-        <p class="hero-desc">Khám phá bộ sưu tập mô hình nhân vật anime độc đáo và chất lượng cao.</p>
-        <a asp-controller="Product" asp-action="Index" class="btn btn-primary">Xem Ngay</a>
+        <p class="hero-desc">Khám phá bộ sưu tập figure độc đáo, giá tốt và trải nghiệm mua sắm mượt mà trên HNKStore.</p>
+        <a asp-area="" asp-controller="Product" asp-action="Index" class="btn btn-primary">Xem tất cả sản phẩm</a>
     </div>
     <div class="floating-shapes">
         <i class="fa-solid fa-star shape-1"></i>
@@ -20,18 +20,21 @@
 </header>
 
 <div id="featured-products" class="container category-section py-4">
-    <h2 class="section-title">Sản Phẩm Nổi Bật <i class="fa-solid fa-star"></i></h2>
-    @if (User.IsInRole(SD.Role_Admin))
-    {
-        <div class="text-center mb-4">
-            <a asp-controller="Product" asp-action="Add" class="btn btn-primary-outline"><i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới</a>
-        </div>
-    }
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+        <h2 class="section-title mb-0">Sản Phẩm Nổi Bật <i class="fa-solid fa-star"></i></h2>
+        @if (User.IsInRole(SD.Role_Admin))
+        {
+            <div class="d-flex flex-wrap gap-2">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-primary-outline">Bảng điều khiển</a>
+                <a asp-area="Admin" asp-controller="Product" asp-action="Add" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm sản phẩm</a>
+            </div>
+        }
+    </div>
 
     <div class="row g-4">
-        @if (Model != null && Model.Any())
+        @if (products.Any())
         {
-            @foreach (var product in Model)
+            @foreach (var product in products)
             {
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="product-card h-100">
@@ -45,18 +48,20 @@
                                 <img src="~/Image/placeholder.png" alt="No Image Available">
                             }
                             <div class="overlay">
-                                <a asp-controller="Product" asp-action="Display" asp-route-id="@product.Id" class="btn btn-secondary">Xem Chi Tiết</a>
+                                <a asp-area="" asp-controller="Product" asp-action="Display" asp-route-id="@product.Id" class="btn btn-secondary">Xem Chi Tiết</a>
                             </div>
                         </div>
                         <div class="product-info">
                             <h3 class="product-name">@product.Name</h3>
                             <p class="product-price">@product.Price.ToString("N0")₫</p>
-                            <button class="btn btn-add">Thêm vào giỏ</button>
+                            <a asp-area="" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@product.Id" asp-route-quantity="1" asp-route-returnUrl="@returnUrl" class="btn btn-add">
+                                Thêm vào giỏ
+                            </a>
                             @if (User.IsInRole(SD.Role_Admin))
                             {
                                 <div class="d-flex justify-content-between mt-3 pt-3 border-top">
-                                    <a asp-controller="Product" asp-action="Update" asp-route-id="@product.Id" class="btn btn-sm btn-outline-secondary rounded-pill"><i class="fa-solid fa-pen"></i> Sửa</a>
-                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger rounded-pill"><i class="fa-solid fa-trash"></i> Xóa</a>
+                                    <a asp-area="Admin" asp-controller="Product" asp-action="Update" asp-route-id="@product.Id" class="btn btn-sm btn-outline-secondary rounded-pill"><i class="fa-solid fa-pen"></i> Sửa</a>
+                                    <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger rounded-pill"><i class="fa-solid fa-trash"></i> Xóa</a>
                                 </div>
                             }
                         </div>
@@ -67,75 +72,35 @@
         else
         {
             <div class="col-12">
-                <p class="text-center text-dark">Chưa có sản phẩm nào.</p>
+                <div class="empty-state">
+                    <h3>Chưa có sản phẩm nào</h3>
+                    <p>Dữ liệu sản phẩm sẽ xuất hiện tại đây ngay khi bạn thêm vào hệ thống.</p>
+                </div>
             </div>
         }
     </div>
 </div>
 
-<!-- New Arrivals Section -->
 <div id="new-arrivals" class="container category-section py-4">
-    <h2 class="section-title">Hàng Mới Về <i class="fa-solid fa-bolt"></i></h2>
+    <h2 class="section-title">Khám Phá Cửa Hàng <i class="fa-solid fa-bolt"></i></h2>
     <div class="row g-4">
-        <div class="col-12">
-            <p class="text-center">Khu vực này đang được cập nhật. Hãy quay lại sớm nhé!</p>
+        <div class="col-md-4">
+            <div class="info-card h-100">
+                <h3>Giao diện hiện đại</h3>
+                <p>Trang chủ, danh sách sản phẩm, chi tiết, giỏ hàng và quản trị đều dùng cùng phong cách nhất quán.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="info-card h-100">
+                <h3>Tìm kiếm nhanh</h3>
+                <p>Tìm sản phẩm theo tên hoặc danh mục ngay trên thanh điều hướng mà không cần đổi trang trước.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="info-card h-100">
+                <h3>Đặt hàng thuận tiện</h3>
+                <p>Thêm vào giỏ, checkout và xác nhận đơn hàng được hiển thị rõ ràng, dễ theo dõi hơn trước.</p>
+            </div>
         </div>
     </div>
 </div>
-
-<!-- Limited Edition Section -->
-<div id="limited-edition" class="container category-section py-4">
-    <h2 class="section-title">Phiên Bản Giới Hạn <i class="fa-solid fa-crown"></i></h2>
-    <div class="row g-4">
-        <div class="col-12">
-            <p class="text-center">Khu vực này đang được cập nhật. Hãy quay lại sớm nhé!</p>
-        </div>
-    </div>
-</div>
-
-
-@section Scripts {
-    <script>
-        // Script xử lý thêm vào giỏ hàng (giống hệt trang chủ)
-        document.querySelectorAll('.btn-add').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const card = this.closest('.product-card');
-                const img = card.querySelector('img');
-                const cartIcon = document.querySelector('.cart-icon');
-                const badge = cartIcon.querySelector('.badge');
-                const clone = img.cloneNode(true);
-                const imgRect = img.getBoundingClientRect();
-                const cartRect = cartIcon.getBoundingClientRect();
-
-                clone.style.position = 'fixed';
-                clone.style.top = imgRect.top + 'px';
-                clone.style.left = imgRect.left + 'px';
-                clone.style.width = imgRect.width + 'px';
-                clone.style.height = imgRect.height + 'px';
-                clone.style.zIndex = '9999';
-                clone.style.objectFit = 'cover';
-                clone.style.borderRadius = '20px';
-                clone.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-                document.body.appendChild(clone);
-                clone.style.animation = 'shatter-shake 0.5s forwards';
-                setTimeout(() => {
-                    clone.style.animation = 'none';
-                    clone.style.top = (cartRect.top + cartRect.height / 2 - 20) + 'px';
-                    clone.style.left = (cartRect.left + cartRect.width / 2 - 20) + 'px';
-                    clone.style.width = '40px';
-                    clone.style.height = '40px';
-                    clone.style.opacity = '0';
-                    clone.style.transform = 'rotate(720deg) scale(0.1)';
-                    clone.style.borderRadius = '50%';
-                }, 400);
-                setTimeout(() => {
-                    clone.remove();
-                    let count = parseInt(badge.innerText);
-                    badge.innerText = count + 1;
-                    cartIcon.style.animation = 'cart-bump 0.3s';
-                    setTimeout(() => { cartIcon.style.animation = 'none'; }, 300);
-                }, 1200);
-            });
-        });
-    </script>
-}

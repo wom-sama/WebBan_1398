@@ -129,7 +129,7 @@ namespace WebBan_1398.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Email hoặc mật khẩu không đúng.");
                     return Page();
                 }
             }

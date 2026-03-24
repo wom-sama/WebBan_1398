@@ -1,0 +1,57 @@
+@model IEnumerable<WebBan_1398.Models.Product>
+
+@{
+    ViewData["Title"] = "Quản lý sản phẩm";
+}
+
+<div class="container py-5">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+        <div>
+            <h1 class="section-title mb-2">Quản Lý Sản Phẩm <i class="fa-solid fa-box-open"></i></h1>
+            <p class="text-muted mb-0">Quản trị viên có thể thêm, sửa, xóa và xem nhanh toàn bộ sản phẩm tại đây.</p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="btn btn-primary-outline">Danh mục</a>
+            <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="btn btn-primary-outline">Đơn hàng</a>
+            <a asp-area="Admin" asp-controller="Product" asp-action="Add" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm sản phẩm</a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        @if (Model.Any())
+        {
+            @foreach (var product in Model)
+            {
+                <div class="col-12 col-md-6 col-xl-4">
+                    <div class="summary-card h-100">
+                        <div class="d-flex gap-3 align-items-start">
+                            <img src="@Url.Content(product.ImageUrl ?? "~/Image/placeholder.png")" alt="@product.Name" class="admin-product-thumb">
+                            <div class="flex-grow-1">
+                                <h3 class="mb-1">@product.Name</h3>
+                                <p class="mb-1 text-muted">Danh mục: @(product.Category?.Name ?? "Chưa phân loại")</p>
+                                <p class="fw-bold mb-1">@product.Price.ToString("N0")₫</p>
+                                <p class="text-muted mb-0">Ảnh phụ: @product.Images.Count</p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Display" asp-route-id="@product.Id" class="btn btn-primary-outline">Chi tiết</a>
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Update" asp-route-id="@product.Id" class="btn btn-outline-secondary rounded-pill">Sửa</a>
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-outline-danger rounded-pill">Xóa</a>
+                            <a asp-area="" asp-controller="Product" asp-action="Display" asp-route-id="@product.Id" class="btn btn-outline-primary rounded-pill">Xem ngoài shop</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="empty-state">
+                    <h3>Chưa có sản phẩm nào</h3>
+                    <p>Bạn có thể bắt đầu bằng cách thêm sản phẩm mới vào hệ thống.</p>
+                    <a asp-area="Admin" asp-controller="Product" asp-action="Add" class="btn btn-primary mt-3">Thêm sản phẩm đầu tiên</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
